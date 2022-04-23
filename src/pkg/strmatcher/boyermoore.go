@@ -1,6 +1,6 @@
 package strmatcher
 
-func Bm(text string, pattern string) int {
+func BoyerMoore(text string, pattern string) int {
 	n := len(text)
 	m := len(pattern)
 	last := lastOccurence(pattern)

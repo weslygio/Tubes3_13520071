@@ -1,6 +1,6 @@
 package strmatcher
 
-func Kmp(text string, pattern string) int {
+func KMP(text string, pattern string) int {
 	n := len(text)
 	m := len(pattern)
 	fail := border(pattern)
