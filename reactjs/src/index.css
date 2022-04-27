@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@100;200;300;400&family=Quicksand:wght@600&display=swap');
+
+body {
+  background-image: url("home-bg.png");
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Quicksand';
+}
+
+header {
+  padding: 13px 35px;
+  text-decoration: none;
+  /* background-color:red; */
+}
+
+header ul {
+  display: flex;
+}
+
+header ul li {
+  position: relative;
+  list-style: none;
+  margin-right: 100px;
+  color: #095B93;
+}
