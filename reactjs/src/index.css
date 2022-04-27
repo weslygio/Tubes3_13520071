@@ -19,9 +19,24 @@ header ul {
   display: flex;
 }
 
+header ul li :link {
+  text-decoration: none;
+}
+
+header ul li :visited {
+  text-decoration: none;
+}
+
 header ul li {
   position: relative;
   list-style: none;
   margin-right: 100px;
   color: #095B93;
+  text-decoration: none;
+}
+
+header ul li :hover {
+  color: #FF7043;
+  font-weight: bold;
+  text-decoration: none;
 }
