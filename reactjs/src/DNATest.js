@@ -1,11 +1,14 @@
 import React from 'react'
 import Header from './component/Header'
+import Logo from './component/Logo'
 
 const DNATest = () => {
   return (
     <div>
         <Header/>
-        <p>DNATest</p>
+        <div className="otherpages">
+            <Logo/>
+        </div>
     </div>
   )
 }

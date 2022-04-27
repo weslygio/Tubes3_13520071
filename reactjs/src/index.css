@@ -40,3 +40,59 @@ header ul li :hover {
   font-weight: bold;
   text-decoration: none;
 }
+
+.homeLogo {
+  height: 50%;
+}
+
+.homeLogo img {
+  margin-top: 150px;
+  margin-left: 400px;
+  margin-bottom: 30px;
+}
+
+.otherpages {
+  height: 25%;
+}
+
+.otherpages img {
+  margin-top: 0px;
+  margin-left: 600px;
+  width: 280px;
+}
+
+.button {
+  box-shadow: 0;
+  border-radius: 20px;
+  font-family: 'Quicksand';
+  font-size: 18px;
+  border: 2px #EA5455;
+  color: white;
+  padding: 10px 40px;
+  cursor: pointer;
+  text-decoration: none
+}
+
+.homeBtn {
+  margin-left: 550px;
+  display: flex;
+}
+
+.btn1 {
+  margin-right: 30px;
+}
+
+.homeBtn :link{
+  text-decoration: none;
+}
+
+.homeBtn :visited{
+  text-decoration: none;
+  color:white;
+}
+
+.homeBtn :hover{
+  text-decoration: none;
+  color:#095B93;
+}
+
