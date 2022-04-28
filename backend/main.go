@@ -77,6 +77,7 @@ func postDisease(c *gin.Context) {
 	insert, err := db.Query("INSERT INTO penyakit(namaPenyakit,sequence) VALUES(? , ?)", penyakit.NamaPenyakit, penyakit.DNASequence)
 	if err != nil {
 		c.Status(http.StatusConflict)
+		return
 	}
 	defer insert.Close()
 
