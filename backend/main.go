@@ -9,8 +9,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/weslygio/Tubes3_13520071/src/pkg/dna"
-	"github.com/weslygio/Tubes3_13520071/src/pkg/timeconv"
+	"github.com/weslygio/Tubes3_13520071/backend/pkg/dna"
+	"github.com/weslygio/Tubes3_13520071/backend/pkg/timeconv"
 )
 
 const (
@@ -43,7 +43,7 @@ type Penyakit struct {
 
 func main() {
 	router := gin.Default()
-	router.GET("/logs?query=:query", getLogs)
+	router.GET("/logs/:query", getLogs)
 	router.POST("/logs", postLogs)
 	router.POST("/diseases", postDisease)
 
@@ -67,7 +67,7 @@ func postDisease(c *gin.Context) {
 	// insert new disease
 	insert, err := db.Query("INSERT INTO penyakit(namaPenyakit,sequence) VALUES(? , ?)", requestDisease.NamaPenyakit, requestDisease.DNASequence)
 	if err != nil {
-		// handle double disease
+		c.Status(http.StatusNotAcceptable)
 		return
 	}
 	defer insert.Close()
@@ -93,13 +93,13 @@ func postLogs(c *gin.Context) {
 	//proses
 	isValid := dna.IsDNAValid(pasien.DNASequence)
 	if !isValid {
-		// handle invalid DNA
+		c.Status(http.StatusNotAcceptable)
 		return
 	}
 
 	disease = getDiseasebyName(pasien.NamaPenyakit)
 	if disease.DNASequence == "" {
-		// handle when there's no such disease
+		c.Status(http.StatusFailedDependency)
 		return
 	}
 	match, similarity := dna.IsDNAMatched(pasien.DNASequence, disease.DNASequence)
@@ -119,11 +119,14 @@ func postLogs(c *gin.Context) {
 		panic(err.Error())
 	}
 	defer insert.Close()
+
+	c.IndentedJSON(http.StatusOK, logPasien)
 }
 
 func getLogs(c *gin.Context) {
 	valid, date, disease := dna.ParsePrediction(c.Param("query"))
 	if !valid {
+		c.Status(http.StatusNotAcceptable)
 		return
 	}
 
@@ -164,7 +167,6 @@ func getLogs(c *gin.Context) {
 		}
 	}
 
-	// get request
 	c.IndentedJSON(http.StatusOK, arr)
 }
 

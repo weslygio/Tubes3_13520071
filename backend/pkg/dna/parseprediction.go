@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/weslygio/Tubes3_13520071/src/pkg/timeconv"
+	"github.com/weslygio/Tubes3_13520071/backend/pkg/timeconv"
 )
 
 func ParsePrediction(text string) (bool, time.Time, string) {

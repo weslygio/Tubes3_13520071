@@ -3,7 +3,7 @@ package dna
 import (
 	"regexp"
 
-	"github.com/weslygio/Tubes3_13520071/src/pkg/strmatcher"
+	"github.com/weslygio/Tubes3_13520071/backend/pkg/strmatcher"
 )
 
 func IsDNAValid(seq string) bool {
@@ -30,7 +30,7 @@ func IsDNAMatched(sampleSeq string, virusSeq string) (bool, float64) {
 
 	if !match {
 		similarity = strmatcher.SubstringHammingDist(sampleSeq, virusSeq)
-		if similarity > 0.8 {
+		if similarity >= 0.8 {
 			match = true
 		}
 	}

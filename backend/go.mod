@@ -1,4 +1,4 @@
-module github.com/weslygio/Tubes3_13520071/src
+module github.com/weslygio/Tubes3_13520071/backend
 
 go 1.18
 
