@@ -47,3 +47,7 @@ func MonthNameToInt(s string) int {
 func DateToString(year int, month time.Month, day int) string {
 	return strconv.Itoa(day) + " " + month.String() + " " + strconv.Itoa(year)
 }
+
+func DateToYYYYMMDD(year int, month time.Month, day int) string {
+	return strconv.Itoa(year) + "-" + strconv.Itoa(int(month)) + "-" + strconv.Itoa(day)
+}

@@ -51,24 +51,31 @@ func main() {
 }
 
 func postDisease(c *gin.Context) {
-	var requestDisease Penyakit
-	err := c.BindJSON(&requestDisease)
+	var penyakit Penyakit
+
+	// Bind request body
+	err := c.BindJSON(&penyakit)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	// open database
+	// Sanitize input
+	isValid := dna.IsDNAValid(penyakit.DNASequence)
+	if !isValid {
+		c.Status(http.StatusNotAcceptable)
+		return
+	}
+
+	// Insert into database
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
 
-	// insert new disease
-	insert, err := db.Query("INSERT INTO penyakit(namaPenyakit,sequence) VALUES(? , ?)", requestDisease.NamaPenyakit, requestDisease.DNASequence)
+	insert, err := db.Query("INSERT INTO penyakit(namaPenyakit,sequence) VALUES(? , ?)", penyakit.NamaPenyakit, penyakit.DNASequence)
 	if err != nil {
-		c.Status(http.StatusNotAcceptable)
-		return
+		c.Status(http.StatusConflict)
 	}
 	defer insert.Close()
 }
@@ -78,85 +85,87 @@ func postLogs(c *gin.Context) {
 	var logPasien LogPasien
 	var disease Penyakit
 
+	// Bind request body
 	err := c.BindJSON(&pasien)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	// open database
-	db, err := sql.Open("mysql", dataSourceName)
-	if err != nil {
-		panic(err.Error())
-	}
-	defer db.Close()
-
-	//proses
+	// Sanitize input
 	isValid := dna.IsDNAValid(pasien.DNASequence)
 	if !isValid {
 		c.Status(http.StatusNotAcceptable)
 		return
 	}
 
+	// Find disease in database
 	disease = getDiseasebyName(pasien.NamaPenyakit)
 	if disease.DNASequence == "" {
 		c.Status(http.StatusFailedDependency)
 		return
 	}
-	match, similarity := dna.IsDNAMatched(pasien.DNASequence, disease.DNASequence)
 
-	// set up logPasien
+	// Compare DNA and add to log
+	match, similarity := dna.IsDNAMatched(pasien.DNASequence, disease.DNASequence)
 	logPasien.Tgl = timeconv.DateToString(time.Now().Date())
 	logPasien.NamaPasien = pasien.NamaPasien
 	logPasien.NamaPenyakit = pasien.NamaPenyakit
 	logPasien.Kemiripan = int(similarity)
 	logPasien.Hasil = match
 
-	// insert new log
-	insert, err := db.Query("INSERT INTO logPasien(tglCheckUp, namaPasien, namaPenyakit, kemiripan, hasil) VALUES(?,?,?,?)",
-		logPasien.Tgl, logPasien.NamaPasien, logPasien.NamaPenyakit, logPasien.Kemiripan, logPasien.Hasil)
-
-	if err != nil {
-		panic(err.Error())
-	}
-	defer insert.Close()
-
-	c.IndentedJSON(http.StatusOK, logPasien)
-}
-
-func getLogs(c *gin.Context) {
-	valid, date, disease := dna.ParsePrediction(c.Param("query"))
-	if !valid {
-		c.Status(http.StatusNotAcceptable)
-		return
-	}
-
-	// open database
+	// Insert into database
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		panic(err.Error())
 	}
 	defer db.Close()
 
-	// temporary variable
+	insert, err := db.Query("INSERT INTO logPasien(tglCheckUp, namaPasien, namaPenyakit, kemiripan, hasil) VALUES(?,?,?,?)",
+		logPasien.Tgl, logPasien.NamaPasien, logPasien.NamaPenyakit, logPasien.Kemiripan, logPasien.Hasil)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer insert.Close()
+
+	c.JSON(http.StatusOK, logPasien)
+}
+
+func getLogs(c *gin.Context) {
+	// Parse query
+	valid, time, disease := dna.ParsePrediction(c.Param("query"))
+	if !valid {
+		c.Status(http.StatusNotAcceptable)
+		return
+	}
+
 	arr := []LogPasien{}
 	var res *sql.Rows
 	var temp string
 
-	if !date.IsZero() && disease == "" {
+	// Select matching data from database
+	db, err := sql.Open("mysql", dataSourceName)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	if !time.IsZero() && disease == "" {
 		// search by given date
-		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ?", date)
-	} else if date.IsZero() && disease != "" {
+		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ?", timeconv.DateToYYYYMMDD(time.Date()))
+	} else if time.IsZero() && disease != "" {
 		// search by given disease
 		res, err = db.Query("SELECT * FROM logPasien WHERE namaPenyakit = ?", disease)
 	} else {
 		// search by given date and disease
-		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ? AND namaPenyakit = ?", date, disease)
+		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ? AND namaPenyakit = ?", timeconv.DateToYYYYMMDD(time.Date()), disease)
 	}
+
 	if err != nil {
 		panic(err.Error())
 	}
 	defer res.Close()
 
+	// Append all matching logs to response body
 	for res.Next() {
 		var logPasien LogPasien
 		err := res.Scan(&temp, &logPasien.Tgl, &logPasien.NamaPasien, &logPasien.NamaPenyakit, &logPasien.Kemiripan, &logPasien.Hasil)
@@ -167,15 +176,14 @@ func getLogs(c *gin.Context) {
 		}
 	}
 
-	c.IndentedJSON(http.StatusOK, arr)
+	c.JSON(http.StatusOK, arr)
 }
 
 func getDiseasebyName(name string) Penyakit {
-	// temporary variable
 	var disease Penyakit
 	var temp string
 
-	// open database
+	// Select disease on name
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		panic(err.Error())
