@@ -48,7 +48,7 @@ const DiseaseForm = () => {
         console.log(selectedFile);
 
         const json = JSON.stringify({ "namaPenyakit": name, "dnaSequence": selectedFile });
-        //console.log(json);
+        console.log(json);
       
         // axios
         //     .post('http://localhost:8080/diseases', json)

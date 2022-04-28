@@ -1,4 +1,4 @@
-/*
+
 import React from 'react'
 import Header from './component/Header'
 import Logo from './component/Logo'
@@ -15,8 +15,8 @@ const Searching = () => {
   )
 }
 export default Searching
-*/
 
+/*
 import React, { Component } from 'react'
 import Header from './component/Header'
 import Logo from './component/Logo'
@@ -63,3 +63,5 @@ export class Searching extends Component {
 }
 
 export default Searching
+
+*/

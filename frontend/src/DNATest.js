@@ -11,7 +11,6 @@ const DNATest = () => {
         <div className="otherpages">
             <Logo/>
             <Form/>
-            {/* <Output text= {'1 April 2022 - Mhs IF - HIV - 75% - False'}/> */}
         </div>
     </div>
   )
