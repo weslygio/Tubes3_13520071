@@ -29,14 +29,21 @@ export default DiseaseForm
 */
 import React, { useState } from 'react';
 import axios from 'axios';
+import Output from './Output';
+import { render } from '@testing-library/react';
 
 const DiseaseForm = () => {
     const [name, setName] = useState("");
     const [selectedFile, setSelectedFile] = useState("");
+    const [state, setState] = useState("");
     var hi = "lol";
 
-    const submitForm = () => {
-    
+    const printState = (s) => {
+        console.log(s);
+    }
+
+    const submitForm = async event => {
+        event.preventDefault();
      
         console.log('tessubmit');
         console.log(name);
@@ -51,16 +58,31 @@ const DiseaseForm = () => {
         //const json = JSON.stringify({ "userId": 1,"id": 2,"title": selectedFile,"body": name });
         console.log(json);
       
-        axios
-            .post('http://localhost:8080/diseases', json)
-            .then((res) => {
-                console.log(res.data);
-                console.log(res.status);
-                console.log(res.statusText);
-                console.log(res.headers);
-                console.log(res.config);
-            })
-            .catch((err) => console.log(err));       
+        // axios
+        //     .post('http://localhost:8080/diseases', json)
+        //     .then((res) => {
+        //         console.log(res.data);
+        //         console.log(res.status);
+        //         console.log(res.statusText);
+        //         console.log(res.headers);
+        //         console.log(res.config);
+        //         console.log("hi");
+        //     })
+        //     .catch((err) => console.log(err));       
+        axios.post('http://localhost:8080/diseases', json).then((res) => {printState(res.status);
+        console.log("hi"); }).catch((err) => console.log(err.response.status));
+        // if (res.status === 409){
+        //     console.log("Penyakit sudah ada");
+        // } else if (res.status === 406) {
+        //     console.log("Sequence DNA tidak valid")
+        // } else {
+        // console.log(res.data);
+        // console.log(res.status);
+        // console.log(res.statusText);
+        // console.log(res.headers);
+        // console.log(res.config);
+        // console.log("hi");      
+        // }
 
     }
 
@@ -94,6 +116,7 @@ const DiseaseForm = () => {
                 </div>
 
                 <input type = 'submit' className='btn-submit' onClick = {submitForm}/>
+                
             </form>
         </div>
         <div className="output1"><p></p></div>
