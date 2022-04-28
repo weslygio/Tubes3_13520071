@@ -29,7 +29,7 @@ type Pasien struct {
 }
 
 type LogPasien struct {
-	Tgl          string `json:"title"`
+	Tgl          string `json:"tanggal"`
 	NamaPasien   string `json:"namaPasien"`
 	NamaPenyakit string `json:"namaPenyakit"`
 	Kemiripan    int    `json:"kemiripan"`
