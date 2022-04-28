@@ -29,11 +29,11 @@ type Pasien struct {
 }
 
 type LogPasien struct {
-	Tgl          string `json:"tanggal"`
-	NamaPasien   string `json:"namaPasien"`
-	NamaPenyakit string `json:"namaPenyakit"`
-	Kemiripan    int    `json:"kemiripan"`
-	Hasil        bool   `json:"hasil"`
+	Tgl          string  `json:"tanggal"`
+	NamaPasien   string  `json:"namaPasien"`
+	NamaPenyakit string  `json:"namaPenyakit"`
+	Kemiripan    float64 `json:"kemiripan"`
+	Hasil        bool    `json:"hasil"`
 }
 
 type Penyakit struct {
@@ -110,7 +110,7 @@ func postLogs(c *gin.Context) {
 	logPasien.Tgl = timeconv.DateToString(time.Now().Date())
 	logPasien.NamaPasien = pasien.NamaPasien
 	logPasien.NamaPenyakit = pasien.NamaPenyakit
-	logPasien.Kemiripan = int(similarity)
+	logPasien.Kemiripan = float64(similarity)
 	logPasien.Hasil = match
 
 	// Insert into database
@@ -141,6 +141,7 @@ func getLogs(c *gin.Context) {
 	arr := []LogPasien{}
 	var res *sql.Rows
 	var temp string
+	disease = "'%" + disease + "%'"
 
 	// Select matching data from database
 	db, err := sql.Open("mysql", dataSourceName)
@@ -154,10 +155,10 @@ func getLogs(c *gin.Context) {
 		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ?", timeconv.DateToYYYYMMDD(time.Date()))
 	} else if time.IsZero() && disease != "" {
 		// search by given disease
-		res, err = db.Query("SELECT * FROM logPasien WHERE namaPenyakit = ?", disease)
+		res, err = db.Query("SELECT * FROM logPasien WHERE namaPenyakit LIKE ?", disease)
 	} else {
 		// search by given date and disease
-		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ? AND namaPenyakit = ?", timeconv.DateToYYYYMMDD(time.Date()), disease)
+		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ? AND namaPenyakit LIKE ?", timeconv.DateToYYYYMMDD(time.Date()), disease)
 	}
 
 	if err != nil {
