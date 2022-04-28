@@ -7,7 +7,7 @@ import (
 )
 
 func IsDNAValid(seq string) bool {
-	pattern := `^[ATCG]*$`
+	pattern := `^[ATCG]+$`
 	matched, err := regexp.MatchString(pattern, seq)
 	if err == nil {
 		return matched
