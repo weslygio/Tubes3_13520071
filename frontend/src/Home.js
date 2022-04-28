@@ -11,8 +11,9 @@ const Home = () => {
             <Logo/>
         </div>
         <div className="homeBtn">
-            <div className="btn1"><Button color = {'#FF7043'} text = {'DNA Test'} link = {'/dnatest'}/></div>
-            <div><Button color = {'#FF7043'} text = {'Search Test Result'} link = {'/searching'}/></div>
+            <div className="btn1"><Button color = {'#FF7043'} text = {'Input Disease'} link = {'/inputdisease'}/></div>
+            <div className="btn2"><Button color = {'#FF7043'} text = {'DNA Test'} link = {'/dnatest'}/></div>
+            <div className="btn3"><Button color = {'#FF7043'} text = {'Search Test Result'} link = {'/searching'}/></div>
         </div>
     </div>
   )

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import Home from './Home'
 import reportWebVitals from './reportWebVitals';
 import {
@@ -10,6 +9,8 @@ import {
 } from "react-router-dom";
 import DNATest from './DNATest';
 import Searching from './Searching';
+import InputDisease from './InputDisease';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />}/>
+      <Route path="inputdisease" element={<InputDisease />}/>
       <Route path="dnatest" element={<DNATest />}/>
       <Route path="searching" element={<Searching />}/>
     </Routes>

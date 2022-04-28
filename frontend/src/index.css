@@ -74,12 +74,16 @@ header ul li :hover {
 }
 
 .homeBtn {
-  margin-left: 550px;
+  margin-left: 430px;
   display: flex;
 }
 
 .btn1 {
-  margin-right: 30px;
+  margin-right: 20px;
+}
+
+.btn2 {
+  margin-right: 20px;
 }
 
 .homeBtn :link{
@@ -139,18 +143,20 @@ header ul li :hover {
   margin-top: 50px;
 }
 
-.search input {
+
+.input-search {
   margin-left: 599px;
   margin-bottom: 20px;
   padding: 15px;
   width: 300px;
   border-radius: 20px;
-  background-color: #FF7043;
+  background-color: #4DD0E1;
 }
 
 .formrow {
   /*background: #f4f4f4; */
   margin: 5px;
+  margin-top: 50px;
   padding: 5px 10px;
   cursor: pointer;
   display: flex;
@@ -166,14 +172,15 @@ header ul li :hover {
   border-radius: 20px;
   font-family: 'Quicksand';
   font-size: 16px;
-  border: 2px #EA5455;
+  border: 2px #FF7043;
   color: white;
-  background-color: #EA5455;
+  background-color: #FF7043;
   padding: 9px 40px;
   cursor: pointer;
   text-decoration: none;
   margin: 10px;
   margin-left: 100px;
+  box-shadow: 2px 2px 5px 0px #888888;
 }
 
 .input-form {
@@ -185,4 +192,30 @@ header ul li :hover {
   font-family: 'Quicksand';
   font-size: 17px;
   background-color: #4DD0E1;
+}
+
+.btn-submit-searching {
+  box-shadow: 0;
+  border-radius: 20px;
+  font-family: 'Quicksand';
+  font-size: 16px;
+  border: 2px #FF7043;
+  color: white;
+  background-color: #FF7043;
+  padding: 9px 40px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 5px;
+  margin-left: 680px;
+  box-shadow: 2px 2px 5px 0px #888888;
+}
+
+.searchButton {
+  margin-left: 15px;
+  padding: 4px 0px;
+}
+
+.about-us {
+  margin-left: 490px;
+  margin-right: 0px;
 }
