@@ -35,8 +35,7 @@ import { render } from '@testing-library/react';
 const DiseaseForm = () => {
     const [name, setName] = useState("");
     const [selectedFile, setSelectedFile] = useState("");
-    const [state, setState] = useState("");
-    var hi = "lol";
+    const [status, setStatus] = useState("");
 
     const printState = (s) => {
         console.log(s);
@@ -44,19 +43,12 @@ const DiseaseForm = () => {
 
     const submitForm = async event => {
         event.preventDefault();
-     
-        console.log('tessubmit');
+
         console.log(name);
         console.log(selectedFile);
-        console.log(hi);
-        //formData.append("namaPenyakit", name);
-        //formData.append("dnaSequence", selectedFile);
 
         const json = JSON.stringify({ "namaPenyakit": name, "dnaSequence": selectedFile });
-        //const res = await axios.post('https://httpbin.org/post', json);
-        
-        //const json = JSON.stringify({ "userId": 1,"id": 2,"title": selectedFile,"body": name });
-        console.log(json);
+        //console.log(json);
       
         // axios
         //     .post('http://localhost:8080/diseases', json)
@@ -70,19 +62,7 @@ const DiseaseForm = () => {
         //     })
         //     .catch((err) => console.log(err));       
         axios.post('http://localhost:8080/diseases', json).then((res) => {printState(res.status);
-        console.log("hi"); }).catch((err) => console.log(err.response.status));
-        // if (res.status === 409){
-        //     console.log("Penyakit sudah ada");
-        // } else if (res.status === 406) {
-        //     console.log("Sequence DNA tidak valid")
-        // } else {
-        // console.log(res.data);
-        // console.log(res.status);
-        // console.log(res.statusText);
-        // console.log(res.headers);
-        // console.log(res.config);
-        // console.log("hi");      
-        // }
+        console.log("hi"); setStatus(res.status);}).catch((err) => {console.log(err.response.statusText); console.log(err.response.data); setStatus(err.response.status);});
 
     }
 
@@ -97,6 +77,17 @@ const DiseaseForm = () => {
         };
         
         reader.readAsText(file);
+    }
+
+    function printMessage(e) {
+        if (e == "406"){
+            return "The DNA sequence is not valid"          
+        } else if (e == "409"){
+            return "The disease has been inputed before"
+        } else {
+            return "Disease successfully inputed"        
+        }
+
     }
 
     return (
@@ -114,9 +105,8 @@ const DiseaseForm = () => {
                     <p><label>DNA Sequence</label></p>
                     <p><input type = 'file' onChange={(e) => processFile(e)}/></p>
                 </div>
-
                 <input type = 'submit' className='btn-submit' onClick = {submitForm}/>
-                
+                <div>{status != "" ? <Output text={printMessage(status)} /> : null}</div>
             </form>
         </div>
         <div className="output1"><p></p></div>

@@ -1,10 +1,8 @@
 /*
-
 import React from 'react'
 import Header from './component/Header'
 import Logo from './component/Logo'
 import SearchBar from './component/SearchBar'
-
 const Searching = () => {
   return (
     <div>
@@ -16,9 +14,7 @@ const Searching = () => {
     </div>
   )
 }
-
 export default Searching
-
 */
 
 import React, { Component } from 'react'
