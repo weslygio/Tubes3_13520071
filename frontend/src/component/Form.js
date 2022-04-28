@@ -72,7 +72,7 @@ const Form = () => {
             <div className="output1"><p></p></div>
         </div>
         <div>
-            <div className='tes'>{result != "{}" ? <Output text={result.tanggal + " - " + result.namaPasien + " - " + result.namaPenyakit + " - " + (result.kemiripan * 100).toFixed(2) + "% - " + JSON.stringify(result.hasil)} /> : null}</div>
+            <div className='tes'>{result !== "{}" ? <Output text={result.tanggal + " - " + result.namaPasien + " - " + result.namaPenyakit + " - " + (result.kemiripan * 100).toFixed(2) + "% - " + JSON.stringify(result.hasil)} /> : null}</div>
         </div>
         </div>
     )
