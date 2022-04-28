@@ -9,7 +9,7 @@ const Searching = () => {
         <Header/>
         <div className="otherpages">
             <Logo/>
-            <SearchBar data={'1 April 2022 - Mhs IF - HIV - 75% - False'} data2 = {'yabai'}/>
+            <SearchBar/>
         </div>
     </div>
   )

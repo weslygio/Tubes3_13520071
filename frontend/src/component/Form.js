@@ -49,6 +49,7 @@ const Form = () => {
     }
 
     return (
+        <div>
         <div className='formrow'>
             <div className="output1"><p></p></div>
             <div className="output2-form">
@@ -66,11 +67,13 @@ const Form = () => {
                         <p><input type = 'file' onChange={(e) => processFile(e)} /></p>
                     </div>
                     <input type = 'submit' value='Submit' className='btn-submit' onClick = {submitForm}/>
-                    <div>{result != "{}" ? <Output text={result.tanggal + " - " + result.namaPasien + " - " + result.namaPenyakit + " - " + result.kemiripan + " - " + JSON.stringify(result.hasil)} /> : null}</div>
                 </form>
-
             </div>
             <div className="output1"><p></p></div>
+        </div>
+        <div>
+            <div className='tes'>{result != "{}" ? <Output text={result.tanggal + " - " + result.namaPasien + " - " + result.namaPenyakit + " - " + (result.kemiripan * 100).toFixed(2) + "% - " + JSON.stringify(result.hasil)} /> : null}</div>
+        </div>
         </div>
     )
 }
