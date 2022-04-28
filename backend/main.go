@@ -43,6 +43,7 @@ type Penyakit struct {
 
 func main() {
 	router := gin.Default()
+	router.GET("/logs/", getLogs)
 	router.GET("/logs/:query", getLogs)
 	router.POST("/logs", postLogs)
 	router.POST("/diseases", postDisease)
@@ -78,6 +79,8 @@ func postDisease(c *gin.Context) {
 		c.Status(http.StatusConflict)
 	}
 	defer insert.Close()
+
+	c.Status(http.StatusOK)
 }
 
 func postLogs(c *gin.Context) {
@@ -120,8 +123,8 @@ func postLogs(c *gin.Context) {
 	}
 	defer db.Close()
 
-	insert, err := db.Query("INSERT INTO logPasien(tglCheckUp, namaPasien, namaPenyakit, kemiripan, hasil) VALUES(?,?,?,?)",
-		logPasien.Tgl, logPasien.NamaPasien, logPasien.NamaPenyakit, logPasien.Kemiripan, logPasien.Hasil)
+	insert, err := db.Query("INSERT INTO logPasien(tglCheckUp, namaPasien, namaPenyakit, kemiripan, hasil) VALUES(?,?,?,?,?)",
+		timeconv.DateToYYYYMMDD(time.Now().Date()), logPasien.NamaPasien, logPasien.NamaPenyakit, logPasien.Kemiripan, logPasien.Hasil)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -141,7 +144,6 @@ func getLogs(c *gin.Context) {
 	arr := []LogPasien{}
 	var res *sql.Rows
 	var temp string
-	disease = "'%" + disease + "%'"
 
 	// Select matching data from database
 	db, err := sql.Open("mysql", dataSourceName)
@@ -155,10 +157,10 @@ func getLogs(c *gin.Context) {
 		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ?", timeconv.DateToYYYYMMDD(time.Date()))
 	} else if time.IsZero() && disease != "" {
 		// search by given disease
-		res, err = db.Query("SELECT * FROM logPasien WHERE namaPenyakit LIKE ?", disease)
+		res, err = db.Query("SELECT * FROM logPasien WHERE LOWER(namaPenyakit) LIKE LOWER(?)", "%"+disease+"%")
 	} else {
 		// search by given date and disease
-		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ? AND namaPenyakit LIKE ?", timeconv.DateToYYYYMMDD(time.Date()), disease)
+		res, err = db.Query("SELECT * FROM logPasien WHERE tglCheckUp = ? AND LOWER(namaPenyakit) LIKE LOWER(?)", timeconv.DateToYYYYMMDD(time.Date()), "%"+disease+"%")
 	}
 
 	if err != nil {
