@@ -34,8 +34,8 @@ func SubstringHammingDist(src string, pattern string) float64 {
 		if err != nil {
 			fmt.Println(err.Error())
 		} else {
-			if dist > maxval {
-				maxval = dist
+			if (1 - dist) > maxval {
+				maxval = 1 - dist
 			}
 		}
 		i += 1
