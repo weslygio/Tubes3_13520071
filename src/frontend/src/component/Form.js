@@ -8,14 +8,11 @@ const Form = () => {
     const [selectedFile, setSelectedFile] = useState(""); // dnaSequence
     const [result, setResult] = useState("{}");
     const [error, setError] = useState("");
-    // namaPasien dnaSequence namaPenyakit
 
     function processFile(e) {
-        console.log('helloFile');
         var file = e.target.files[0];
         var reader = new FileReader();
         reader.onload = function(e) {
-            // The file's text will be printed here
             console.log(e.target.result)
             setSelectedFile(e.target.result)
         };
@@ -26,33 +23,16 @@ const Form = () => {
     const submitForm = async event => {
         event.preventDefault();
 
-        console.log(name);
-        console.log(disease);
-        console.log(selectedFile);
-
         const json = JSON.stringify({ "namaPasien": name, "dnaSequence": selectedFile, "namaPenyakit": disease });
-        console.log(json);
-      
-        // axios
-        //     .post('http://localhost:8080/diseases', json)
-        //     .then((res) => {
-        //         console.log(res.data);
-        //         console.log(res.status);
-        //         console.log(res.statusText);
-        //         console.log(res.headers);
-        //         console.log(res.config);
-        //         console.log("hi");
-        //     })
-        //     .catch((err) => console.log(err));       
-        axios.post('http://localhost:8080/logs', json).then((res) => {console.log(res.data);
-        console.log("hi"); setResult(res.data);}).catch((err) => {console.log(err.response.statusText); console.log(err.response.data); setError(err.response.status);});
+       
+        axios.post('http://localhost:8080/logs', json).then((res) => setResult(res.data)).catch((err) => {setError(err.response.status);});
 
     }
 
     function printMessage(e) {
-        if (e == "406"){
+        if (e === 406){
             return "The DNA sequence is not valid"          
-        } else if (e == "424"){
+        } else if (e === 424){
             return "The disease has not been inputed before"
         } 
 
@@ -83,7 +63,7 @@ const Form = () => {
         </div>
         <div>
             <div className='tes'>{result !== "{}" ? <Output text={result.tanggal + " - " + result.namaPasien + " - " + result.namaPenyakit + " - " + (result.kemiripan * 100).toFixed(2) + "% - " + JSON.stringify(result.hasil)} /> : 
-            (error != "" ? <Output text={printMessage(error)}/> : null )}</div>
+            (error !== "" ? <Output text={printMessage(error)}/> : null )}</div>
         </div>
         </div>
     )

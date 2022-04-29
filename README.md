@@ -20,7 +20,7 @@ Make sure you have installed:<br>
 1. Clone this repository
 
 ```
-git clone https://github.com/clauculus/stima-convex-hull.git
+git clone https://github.com/weslygio/Tubes3_13520071.git
 ```
 
 2. To run the back-end: go to src/backend directory and run:
