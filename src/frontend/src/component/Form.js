@@ -34,7 +34,9 @@ const Form = () => {
             return "The DNA sequence is not valid"          
         } else if (e === 424){
             return "The disease has not been inputed before"
-        } 
+        } else if (e === 400){
+            return "The patient's name is empty"
+        }
 
     }
 

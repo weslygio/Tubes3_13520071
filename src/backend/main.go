@@ -108,7 +108,7 @@ func postLogs(c *gin.Context) {
 	}
 
 	// Sanitize input
-	if strings.Trim(pasien.NamaPenyakit, " ") == "" {
+	if strings.Trim(pasien.NamaPasien, " ") == "" {
 		c.Status(http.StatusBadRequest)
 		return
 	}
