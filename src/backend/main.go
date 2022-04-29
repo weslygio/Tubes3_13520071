@@ -108,6 +108,10 @@ func postLogs(c *gin.Context) {
 	}
 
 	// Sanitize input
+	if strings.Trim(pasien.NamaPenyakit, " ") == "" {
+		c.Status(http.StatusBadRequest)
+		return
+	}
 	isValid := dna.IsDNAValid(pasien.DNASequence)
 	if !isValid {
 		c.Status(http.StatusNotAcceptable)

@@ -2,6 +2,7 @@ package timeconv
 
 import (
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -27,21 +28,21 @@ func IsDateValid(day, month, year int) bool {
 
 func MonthNameToInt(s string) int {
 	monthTable := map[string]int{
-		"Jan": 1, "January": 1, "Januari": 1,
-		"Feb": 2, "February": 2, "Februari": 2,
-		"Mar": 3, "March": 3, "Maret": 3,
-		"Apr": 4, "April": 4,
-		"May": 5, "Mei": 5,
-		"Jun": 6, "June": 6, "Juni": 6,
-		"Jul": 7, "July": 7, "Juli": 7,
-		"Aug": 8, "August": 8, "Agustus": 8,
-		"Sep": 9, "Sept": 9, "September": 9,
-		"Oct": 10, "Okt": 10, "October": 10, "Oktober": 10,
-		"Nov": 11, "November": 11,
-		"Dec": 12, "Des": 12, "December": 12, "Desember": 12,
+		"jan": 1, "january": 1, "januari": 1,
+		"feb": 2, "february": 2, "februari": 2,
+		"mar": 3, "march": 3, "faret": 3,
+		"apr": 4, "april": 4,
+		"may": 5, "mei": 5,
+		"jun": 6, "june": 6, "juni": 6,
+		"jul": 7, "july": 7, "juli": 7,
+		"aug": 8, "august": 8, "agustus": 8,
+		"sep": 9, "sept": 9, "september": 9,
+		"oct": 10, "okt": 10, "october": 10, "oktober": 10,
+		"nov": 11, "november": 11,
+		"dec": 12, "des": 12, "december": 12, "desember": 12,
 	}
 
-	return monthTable[s]
+	return monthTable[strings.ToLower(s)]
 }
 
 func DateToString(year int, month time.Month, day int) string {
