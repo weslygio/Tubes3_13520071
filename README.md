@@ -23,13 +23,13 @@ Make sure you have installed:<br>
 git clone https://github.com/clauculus/stima-convex-hull.git
 ```
 
-2. To run the back-end: go to backend directory and run:
+2. To run the back-end: go to src/backend directory and run:
 
 ```
 go run .
 ```
 
-3. To run the front-end: go to frontend directory and run:
+3. To run the front-end: go to src/frontend directory and run:
 
 ```
 npm install
