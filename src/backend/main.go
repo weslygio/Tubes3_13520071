@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/weslygio/Tubes3_13520071/backend/pkg/dna"
-	"github.com/weslygio/Tubes3_13520071/backend/pkg/timeconv"
+	"github.com/weslygio/Tubes3_13520071/src/backend/pkg/dna"
+	"github.com/weslygio/Tubes3_13520071/src/backend/pkg/timeconv"
 )
 
 const (
@@ -43,6 +45,12 @@ type Penyakit struct {
 
 func main() {
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowAllOrigins: true,
+		AllowMethods:    []string{"GET", "POST"},
+	}))
+
 	router.GET("/logs/", getLogs)
 	router.GET("/logs/:query", getLogs)
 	router.POST("/logs", postLogs)
@@ -61,8 +69,12 @@ func postDisease(c *gin.Context) {
 	}
 
 	// Sanitize input
-	isValid := dna.IsDNAValid(penyakit.DNASequence)
-	if !isValid {
+	if strings.Trim(penyakit.NamaPenyakit, " ") == "" {
+		c.Status(http.StatusBadRequest)
+		return
+	}
+	isDNAValid := dna.IsDNAValid(penyakit.DNASequence)
+	if !isDNAValid {
 		c.Status(http.StatusNotAcceptable)
 		return
 	}

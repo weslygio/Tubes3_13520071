@@ -3,7 +3,7 @@ package dna
 import (
 	"regexp"
 
-	"github.com/weslygio/Tubes3_13520071/backend/pkg/strmatcher"
+	"github.com/weslygio/Tubes3_13520071/src/backend/pkg/strmatcher"
 )
 
 func IsDNAValid(seq string) bool {
