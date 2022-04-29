@@ -206,7 +206,7 @@ func getDiseasebyName(name string) Penyakit {
 	}
 	defer db.Close()
 
-	res := db.QueryRow("SELECT * FROM penyakit WHERE namaPenyakit = ?", name)
+	res := db.QueryRow("SELECT * FROM penyakit WHERE LOWER(namaPenyakit) = LOWER(?)", name)
 	err = res.Scan(&temp, &disease.NamaPenyakit, &disease.DNASequence)
 	if err == sql.ErrNoRows {
 		disease.NamaPenyakit = ""
