@@ -7,6 +7,7 @@ const Form = () => {
     const [disease, setDisease] = useState(""); // namaPenyakit
     const [selectedFile, setSelectedFile] = useState(""); // dnaSequence
     const [result, setResult] = useState("{}");
+    const [error, setError] = useState("");
     // namaPasien dnaSequence namaPenyakit
 
     function processFile(e) {
@@ -44,7 +45,16 @@ const Form = () => {
         //     })
         //     .catch((err) => console.log(err));       
         axios.post('http://localhost:8080/logs', json).then((res) => {console.log(res.data);
-        console.log("hi"); setResult(res.data);}).catch((err) => {console.log(err.response.statusText); console.log(err.response.data); setResult(err.response.status);});
+        console.log("hi"); setResult(res.data);}).catch((err) => {console.log(err.response.statusText); console.log(err.response.data); setError(err.response.status);});
+
+    }
+
+    function printMessage(e) {
+        if (e == "406"){
+            return "The DNA sequence is not valid"          
+        } else if (e == "424"){
+            return "The disease has not been inputed before"
+        } 
 
     }
 
@@ -72,7 +82,8 @@ const Form = () => {
             <div className="output1"><p></p></div>
         </div>
         <div>
-            <div className='tes'>{result !== "{}" ? <Output text={result.tanggal + " - " + result.namaPasien + " - " + result.namaPenyakit + " - " + (result.kemiripan * 100).toFixed(2) + "% - " + JSON.stringify(result.hasil)} /> : null}</div>
+            <div className='tes'>{result !== "{}" ? <Output text={result.tanggal + " - " + result.namaPasien + " - " + result.namaPenyakit + " - " + (result.kemiripan * 100).toFixed(2) + "% - " + JSON.stringify(result.hasil)} /> : 
+            (error != "" ? <Output text={printMessage(error)}/> : null )}</div>
         </div>
         </div>
     )
