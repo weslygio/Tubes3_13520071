@@ -31,8 +31,10 @@ const DiseaseForm = () => {
             return "The DNA sequence is not valid"          
         } else if (e === 409){
             return "The disease has been inputed before"
+        } else if (e === 400){
+            return "Disease name not valid"        
         } else {
-            return "Disease successfully inputed"        
+            return "Disease successfully inputed"
         }
 
     }
