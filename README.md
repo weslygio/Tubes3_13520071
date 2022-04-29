@@ -26,6 +26,7 @@ git clone https://github.com/weslygio/Tubes3_13520071.git
 2. To run the back-end: go to src/backend directory and run:
 
 ```
+go get .
 go run .
 ```
 
@@ -33,8 +34,6 @@ go run .
 
 ```
 npm install
-```
-```
 npm start
 ```
 
