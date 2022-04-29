@@ -1,7 +1,7 @@
 # Tubes3_13520071
 ## GeneTest
 
-GeneTest is an interactive web-based application to detect whether a patient has a certain genetic disease by using DNA pattern matching. The DNA pattern matching is implemented using **string matching algorithm and regular expression**.
+GeneTest is an interactive web-based application to detect whether a patient has a certain genetic disease by using DNA pattern matching. The DNA pattern matching is implemented using **string matching algorithm and regular expression**.<br>
 This project is made for Tugas Besar 3 IF2121 Strategi Algoritma by:
 **Kelompok 07 Sangci Reborn** <br>
 13520071 - Wesly Giovano <br>
@@ -13,7 +13,7 @@ This project is made for Tugas Besar 3 IF2121 Strategi Algoritma by:
 Make sure you have installed:<br>
 <a href="https://nodejs.org/en/download/" target="_blank">Node.js</a><br>
 <a href="https://go.dev/dl/" target="_blank">Golang</a><br>
-<a href="https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc/related?hl=en-US" target="_blank">CORS Changer (to allow sending cross-domain request) </a>
+<a href="https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc/related?hl=en-US" target="_blank">CORS Changer (to allow sending cross-domain request, make sure the extension is ON after installing) </a>
 
 # How to use
 
