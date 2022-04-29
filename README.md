@@ -10,7 +10,7 @@ This project is made for Tugas Besar 3 IF2121 Strategi Algoritma by:
 
 # Requirement
 
-Make sure you have installed:
+Make sure you have installed:<br>
 <a href="https://nodejs.org/en/download/" target="_blank">Node.js</a><br>
 <a href="https://go.dev/dl/" target="_blank">Golang</a><br>
 <a href="https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc/related?hl=en-US" target="_blank">CORS Changer (to allow sending cross-domain request) </a>
