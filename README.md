@@ -44,9 +44,9 @@ npm start
 # Functionality
 
 ![image](https://user-images.githubusercontent.com/88203931/165911919-7298926a-759b-4e20-94f3-a7f220bf93b5.png)
-1. Input Disease
+### 1. Input Disease
 ![image](https://user-images.githubusercontent.com/88203931/165911712-e3c574c7-aad3-4e08-9b2c-e5f107e0b4b8.png)
-2. Predict a patient's disease
+### 2. Predict a patient's disease
 ![image](https://user-images.githubusercontent.com/88203931/165911737-08e07ffb-3be3-4728-8fe2-c12660aa8507.png)
-3. Search from the prediction
+### 3. Search from the prediction
 ![image](https://user-images.githubusercontent.com/88203931/165911776-37b652f0-c919-445d-a5d0-ef32f3273ac9.png)
